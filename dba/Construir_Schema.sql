@@ -113,7 +113,7 @@ GRANT EXECUTE ON SYSTEM.CADASTRAR_EMPRESA_PAC TO APPCADASTRAR;;
 --GRANTS
 
 -- CABEÇALHO PACOTE
-CREATE OR REPLACE PACKAGE CADASTRAR_EMPRESA_PAC
+create or replace PACKAGE CADASTRAR_EMPRESA_PAC
 IS  
     PROCEDURE CADASTRAR_USUARIO
     (
@@ -121,12 +121,32 @@ IS
         p_ACESSO IN USERS_APPLICATION.NOME_ACESSO%type, 
         p_SENHA IN USERS_APPLICATION.SENHA%type
     );
-    
+
     PROCEDURE CADASTRAR_EMPRESA
     (
         p_NOME IN EMPRESA.NOME%type, 
         p_CNPJ IN EMPRESA.CNPJ%type, 
         p_DATAABERTURA IN EMPRESA.DATA_ABERTURA%type
+    );
+    
+    PROCEDURE ALTERAR_EMPRESA
+    (
+        p_ID IN EMPRESA.ID%type,
+        p_NOME IN EMPRESA.NOME%type, 
+        p_CNPJ IN EMPRESA.CNPJ%type, 
+        p_DATAABERTURA IN EMPRESA.DATA_ABERTURA%type
+    );
+    
+    PROCEDURE ALTERAR_EMPRESA
+    (
+        p_ID IN EMPRESA.ID%type,
+        p_ATRIBUTO IN VARCHAR2,
+        p_VALATTR IN VARCHAR2
+    );
+    
+    PROCEDURE EXCLUIR_EMPRESA
+    (
+        p_ID IN EMPRESA.ID%type
     );
 END; 
 -- CABEÇALHO PACOTE
@@ -140,9 +160,17 @@ IS
     (p_CNPJ IN EMPRESA.CNPJ%type)
     RETURN EMPRESA.CNPJ%type
     IS
+        v_CNPJ EMPRESA.CNPJ%type;
+        e_CONTEM_SEPARADOR EXCEPTION;
     BEGIN
-        RETURN SUBSTR(p_CNPJ, 1, 2) || '.' || SUBSTR(p_CNPJ, 3, 3) || '.' || SUBSTR(p_CNPJ, 6, 3) || '/' || SUBSTR(p_CNPJ, 9, 4) || '-' || SUBSTR(p_CNPJ, 13);
+        v_CNPJ := TRIM(p_CNPJ);
+        IF INSTR(v_CNPJ, '.') > 0 OR INSTR(v_CNPJ, '/') > 0 OR INSTR(v_CNPJ, '-') > 0 THEN
+            RAISE e_CONTEM_SEPARADOR;
+        END IF;
+        RETURN SUBSTR(v_CNPJ, 1, 2) || '.' || SUBSTR(v_CNPJ, 3, 3) || '.' || SUBSTR(v_CNPJ, 6, 3) || '/' || SUBSTR(v_CNPJ, 9, 4) || '-' || SUBSTR(v_CNPJ, 13);
     EXCEPTION
+        WHEN e_CONTEM_SEPARADOR THEN
+            RAISE_APPLICATION_ERROR(-20001, SQLERRM || ' Erro ao formatar CNPJ. Informe apenas números!');
         WHEN OTHERS THEN
             RAISE_APPLICATION_ERROR(-20001, SQLERRM || ' Erro ao formatar CNPJ ');
     END;
@@ -179,6 +207,69 @@ IS
     EXCEPTION
         WHEN OTHERS THEN
             RAISE_APPLICATION_ERROR(-20003, SQLERRM || ' Erro ao cadastrar Novo Usuário ');
+    END;
+    
+    PROCEDURE ALTERAR_EMPRESA
+    (
+        p_ID IN EMPRESA.ID%type,
+        p_NOME IN EMPRESA.NOME%type, 
+        p_CNPJ IN EMPRESA.CNPJ%type, 
+        p_DATAABERTURA IN EMPRESA.DATA_ABERTURA%type
+    )
+    IS
+        v_QUERY VARCHAR2(1000);
+    BEGIN
+        UPDATE EMPRESA SET NOME = p_NOME, CNPJ = p_CNPJ , DATA_ABERTURA = TO_DATE(p_DATAABERTURA, 'DD/MM/YY') WHERE ID = p_ID;
+        COMMIT;
+    EXCEPTION
+        WHEN OTHERS THEN
+            RAISE_APPLICATION_ERROR(-20004, SQLERRM || ' Erro ao Alterar Empresa de ID: ' || p_ID);
+    END;
+    
+    PROCEDURE ALTERAR_EMPRESA
+    (
+        p_ID IN EMPRESA.ID%type,
+        p_ATRIBUTO IN VARCHAR2,
+        p_VALATTR IN VARCHAR2
+    )
+    IS
+        v_QUERY VARCHAR2(1000);
+        v_CNPJ VARCHAR2(18);
+        e_ATRIBUTO_INEXISTENTE EXCEPTION;
+    BEGIN
+        IF UPPER(p_ATRIBUTO) = 'NOME' THEN
+            UPDATE EMPRESA SET NOME = p_VALATTR WHERE ID =  p_ID;
+            COMMIT;
+        ELSIF UPPER(p_ATRIBUTO) = 'CNPJ' THEN
+            v_CNPJ := FORMATA_CNPJ(p_VALATTR);
+            UPDATE EMPRESA SET CNPJ = v_CNPJ WHERE ID = p_ID;
+            COMMIT;
+        ELSIF UPPER(p_ATRIBUTO) = 'DATA_ABERTURA' THEN
+            UPDATE EMPRESA SET DATA_ABERTURA = TO_DATE(p_VALATTR, 'DD/MM/YY') WHERE ID = p_ID;
+            COMMIT;
+        ELSE
+            RAISE e_ATRIBUTO_INEXISTENTE;
+        END IF;
+        
+    EXCEPTION
+        WHEN e_ATRIBUTO_INEXISTENTE THEN
+            RAISE_APPLICATION_ERROR(-20004, SQLERRM || ' Erro ao Alterar Empresa de ID: ' || p_ID || '. Atributo inexistente: ' || p_ATRIBUTO);
+        WHEN OTHERS THEN
+            RAISE_APPLICATION_ERROR(-20004, SQLERRM || ' Erro ao Alterar Empresa de ID: ' || p_ID);
+    END;
+    
+    
+    PROCEDURE EXCLUIR_EMPRESA
+    (
+        p_ID IN EMPRESA.ID%type
+    )
+    IS
+    BEGIN
+        DELETE FROM EMPRESA WHERE ID = p_ID;
+        COMMIT;
+    EXCEPTION
+        WHEN OTHERS THEN
+            RAISE_APPLICATION_ERROR(-20005, SQLERRM || ' Erro ao Excluir Empresa de ID: ' || p_ID);
     END;
     -- PROCEDURES
 
