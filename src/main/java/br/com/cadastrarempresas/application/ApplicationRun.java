@@ -1,19 +1,17 @@
-package com.webapp.application;
+package br.com.cadastrarempresas.application;
 
-import com.webapp.entities.Empresa;
+import br.com.cadastrarempresas.model.entitites.Empresa;
 
-public class App {
+public class ApplicationRun {
 	
 	public static void main(String[] args) {
 		Empresa primeiraEmpresa = new Empresa();
 		
-		primeiraEmpresa.setId(1);	
 		
 		primeiraEmpresa.setName("Orbix");
 		System.out.println(primeiraEmpresa);
 		
 		Empresa segundaEmpresa = new Empresa();
-		segundaEmpresa.setId(2);
 		
 		System.out.println(primeiraEmpresa.equals(segundaEmpresa));
 		

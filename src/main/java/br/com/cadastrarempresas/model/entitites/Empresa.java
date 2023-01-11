@@ -1,4 +1,4 @@
-package com.webapp.entities;
+package br.com.cadastrarempresas.model.entitites;
 
 import java.util.Date;
 import java.util.Objects;
