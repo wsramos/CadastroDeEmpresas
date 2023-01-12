@@ -8,7 +8,7 @@ public class ApplicationRun {
 		Empresa primeiraEmpresa = new Empresa();
 		
 		
-		primeiraEmpresa.setName("Orbix");
+		primeiraEmpresa.setNome("Orbix");
 		System.out.println(primeiraEmpresa);
 		
 		Empresa segundaEmpresa = new Empresa();

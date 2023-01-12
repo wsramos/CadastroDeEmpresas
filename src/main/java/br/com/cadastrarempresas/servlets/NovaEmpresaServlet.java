@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.com.cadastrarempresas.model.dao.impl.EmpresaDaoJDBC;
 import br.com.cadastrarempresas.model.entitites.Empresa;
+import br.com.cadastrarempresas.services.EmpresaService;
 
 /**
  * Servlet implementation class NovaEmpresaServlet
@@ -25,23 +25,25 @@ public class NovaEmpresaServlet extends HttpServlet {
 			throws ServletException, IOException {
 		System.out.println("Cadastrando nova empresa");
 		String nomeEmpresa = request.getParameter("nome");
+		String cnpjEmprsa = request.getParameter("cnpj");
 		String dataEmpresa = request.getParameter("data");
 
 		Empresa empresa = new Empresa();
-		empresa.setName(nomeEmpresa);
+		empresa.setNome(nomeEmpresa);
+		empresa.setCnpj(cnpjEmprsa);
 
 		try {
 			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-			empresa.setDataDeAbertura(sdf.parse(dataEmpresa));
+			empresa.setDataAbertura(sdf.parse(dataEmpresa));
 		} catch (ParseException e) {
 			throw new ServletException(e);
 
 		}
 
-		EmpresaDaoJDBC empDao = new EmpresaDaoJDBC();
-		empDao.insert(empresa);
+		EmpresaService empServ = new EmpresaService();
+		empServ.save(empresa);
 
-		response.sendRedirect("listaEmpresas");
+		response.sendRedirect("ListaEmpresas");
 
 
 	}

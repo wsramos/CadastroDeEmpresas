@@ -5,9 +5,9 @@ import java.util.Objects;
 
 public class Empresa {
 	private Integer id;
-	private String name;
+	private String nome;
 	private String cnpj;
-	private Date dataDeAbertura;
+	private Date dataAbertura;
 	
 	public Empresa() {
 		
@@ -15,19 +15,23 @@ public class Empresa {
 	
 	public Empresa(String name, String cnpj, Date dataDeAbertura) {
 		super();
-		this.name = name;
+		this.nome = name;
 		this.cnpj = cnpj;
-		this.dataDeAbertura = dataDeAbertura;
+		this.dataAbertura = dataDeAbertura;
 	}
 	public Integer getId() {
 		return id;
 	}
 	
-	public String getName() {
-		return name;
+	public void setId(Integer id) {
+		this.id = id;
 	}
-	public void setName(String name) {
-		this.name = name;
+	
+	public String getNome() {
+		return nome;
+	}
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 	public String getCnpj() {
 		return cnpj;
@@ -35,16 +39,16 @@ public class Empresa {
 	public void setCnpj(String cnpj) {
 		this.cnpj = cnpj;
 	}
-	public Date getDataDeAbertura() {
-		return dataDeAbertura;
+	public Date getDataAbertura() {
+		return dataAbertura;
 	}
-	public void setDataDeAbertura(Date dataDeAbertura) {
-		this.dataDeAbertura = dataDeAbertura;
+	public void setDataAbertura(Date dataAbertura) {
+		this.dataAbertura = dataAbertura;
 	}
 	
 	@Override
 	public String toString() {
-		return "Empresa [id=" + id + ", name=" + name + ", cnpj=" + cnpj + ", dataDeAbertura=" + dataDeAbertura + "]";
+		return "Empresa [id=" + id + ", name=" + nome + ", cnpj=" + cnpj + ", dataAbertura=" + dataAbertura + "]";
 	}
 
 	@Override

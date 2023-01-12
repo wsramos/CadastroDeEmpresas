@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.com.cadastrarempresas.model.dao.impl.EmpresaDaoJDBC;
 import br.com.cadastrarempresas.model.entitites.Empresa;
+import br.com.cadastrarempresas.services.EmpresaService;
 
 /**
  * Servlet implementation class ListaEmpresasServlet
@@ -21,9 +21,9 @@ import br.com.cadastrarempresas.model.entitites.Empresa;
 public class ListaEmpresasServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-	protected void doget(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		EmpresaDaoJDBC empDao = new EmpresaDaoJDBC();
-		List<Empresa> lista = empDao.findAll();
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		EmpresaService eservice = new EmpresaService();
+		List<Empresa> lista = eservice.findAll();
 		
 		request.setAttribute("Empresas", lista);
 		RequestDispatcher rd = request.getRequestDispatcher("/listaEmpresas.jsp");

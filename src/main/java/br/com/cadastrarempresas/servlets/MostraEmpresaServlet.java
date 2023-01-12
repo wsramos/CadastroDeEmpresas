@@ -26,7 +26,7 @@ public class MostraEmpresaServlet extends HttpServlet {
 		
 		Empresa empresa = empDao.findById(id);
 		
-		System.out.println("Editando a empresa " + empresa.getName());
+		System.out.println("Editando a empresa " + empresa.getNome());
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/formAlteraEmpresa.jsp");
 		request.setAttribute("empresa", empresa);
