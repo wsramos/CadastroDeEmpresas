@@ -1,4 +1,4 @@
-package br.com.cadastrarempresas.services;
+package br.com.cadastrarempresas.controllers.services;
 
 import java.util.List;
 
