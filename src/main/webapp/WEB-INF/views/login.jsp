@@ -4,13 +4,13 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>Insert title here</title>
+		<title>Login de usuário</title>
 	</head>
+	
 	<body>
 		<form action="#" method="post">
-			Nome: <input type="text" name="nome"/>
-			Data de Abertura: <input type="text" name="data">
-			
+			Usuário: <input type="text" name="user"/>
+			Senha: <input type="password" name="password" />
 			<input type="submit" />
 		</form>
 	</body>
