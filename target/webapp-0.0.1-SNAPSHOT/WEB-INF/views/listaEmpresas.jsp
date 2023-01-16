@@ -25,12 +25,13 @@
 			<c:forEach items="${Empresas}" var="empresa">
 				<li>
 					${empresa.nome} -
+					${empresa.cnpj} -
 					<fmt:formatDate value="${empresa.dataAbertura }" pattern="dd/MM/yyyy"/>
-					<a href="/gerenciador/mostraEmpresa?id=${empresa.id}">Editar</a> 
-					<a href="/gerenciador/removeEmpresa?id=${empresa.id}">Remover</a>
+					<a href="/webapp/in?id=${empresa.id}&action=MostraEmpresa">Editar</a> 
+					<a href="/webapp/in?id=${empresa.id}&action=RemoveEmpresa" onclick="return confirm('Are you sure you want to continue')">Remover</a>
 				</li>
 			</c:forEach>
 		</ul>
-		
+		<script type="text/javascript"></script>
 	</body>
 </html>

@@ -5,6 +5,8 @@ br\com\cadastrarempresas\model\dao\dbaccess\DB.class
 br\com\cadastrarempresas\actions\impl\CadastraEmpresa.class
 br\com\cadastrarempresas\model\entitites\Empresa.class
 br\com\cadastrarempresas\model\dao\interfaces\EmpresaDao.class
+br\com\cadastrarempresas\actions\impl\RemoveEmpresa.class
+br\com\cadastrarempresas\actions\impl\AlteraEmpresa.class
 br\com\cadastrarempresas\actions\impl\MostraEmpresa.class
 br\com\cadastrarempresas\model\dao\impl\EmpresaDaoJDBC.class
 br\com\cadastrarempresas\actions\Action.class
