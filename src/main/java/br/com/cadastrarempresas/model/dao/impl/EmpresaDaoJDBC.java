@@ -88,7 +88,7 @@ public class EmpresaDaoJDBC implements EmpresaDao{
 					st.setInt(1, obj.getId());
 					st.setString(2, obj.getNome());
 					st.setString(3, obj.getCnpj());
-					st.setDate(3, new java.sql.Date(obj.getDataAbertura().getTime()));
+					st.setDate(4, new java.sql.Date(obj.getDataAbertura().getTime()));
 					st.executeUpdate();	
 				}		
 				catch (SQLException e) {

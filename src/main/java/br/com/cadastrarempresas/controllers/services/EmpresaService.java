@@ -14,6 +14,10 @@ private EmpresaDao dao = DaoFactory.createEmpresaDao();
 		return dao.findAll();
 	}
 	
+	public Empresa findById(Integer id) {
+        return dao.findById(id);
+    }
+	
 	public void save(Empresa obj) {
 		if (obj.getId() == null) {
 			dao.insert(obj);
@@ -28,7 +32,7 @@ private EmpresaDao dao = DaoFactory.createEmpresaDao();
 		dao.updateAtributteById(id, attribute, attribute);
 	}
 	
-	public void remove(Empresa obj) {
-		dao.deleteById(obj.getId());
+	public void remove(Integer id) {
+		dao.deleteById(id);
 	}
 }
