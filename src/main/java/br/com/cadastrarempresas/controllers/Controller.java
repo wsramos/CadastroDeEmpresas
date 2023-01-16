@@ -21,7 +21,7 @@ public class Controller extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String view = "";
 		try {
-			Action actionImp = (Action) Class.forName("br.com.cadastrarempresas.actions." + request.getParameter("action")).newInstance();
+			Action actionImp = (Action) Class.forName("br.com.cadastrarempresas.actions.impl." + request.getParameter("action")).newInstance();
 			view = actionImp.executa(request, response);
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
 			// TODO Auto-generated catch block

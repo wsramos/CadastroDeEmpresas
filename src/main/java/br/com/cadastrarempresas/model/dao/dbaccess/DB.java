@@ -20,7 +20,7 @@ import oracle.jdbc.datasource.impl.OracleDataSource;
 			if (conn == null) {
 				try {
 					OracleDataSource ods = new OracleDataSource();
-					ods.setURL("jdbc:oracle:thin:@//localhost:1521/XE"); // jdbc:oracle:thin@//[hostname]:[port]/[DB service name]
+					ods.setURL("jdbc:oracle:thin:@//192.168.12.46:1521/oracle"); // jdbc:oracle:thin@//[hostname]:[port]/[DB service name]
 					ods.setUser("appcadastrar");
 					ods.setPassword("appcadastrar");
 					conn = ods.getConnection();
